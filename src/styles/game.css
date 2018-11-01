@@ -167,7 +167,7 @@ h1 {
   text-align: center;
 }
 
-.board {
+/* .board {
   animation: pulse 10s infinite alternate linear;
 }
 
@@ -190,4 +190,4 @@ h1 {
   80% {
     fill: purple;
   }
-}
+} */
