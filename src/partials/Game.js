@@ -12,6 +12,10 @@ export default class Game {
     this.paddleWidth = 8;
     this.paddleHeight = 56;
     this.boardGap = 10;
+    this.radius = 10;
+    this.radius2 = 20;
+    this.color = 'red';
+    this.color2 = 'blue';
 
     this.player1 = new Paddle(
       this.height,
@@ -32,7 +36,8 @@ export default class Game {
       KEYS.down
     );
 
-    this.circle = new Ball(10, this.width, this.height);
+    this.ball = new Ball(this.radius, this.width, this.height, 'red');
+    this.ball2 = new Ball(this.radius2, this.width, this.height, 'blue');
 
     console.log(this.player1);
 
@@ -51,6 +56,7 @@ export default class Game {
     this.board.render(svg);
     this.player1.render(svg);
     this.player2.render(svg);
-    this.circle.render(svg);
+    this.ball.render(svg);
+    this.ball2.render(svg);
   }
 }
