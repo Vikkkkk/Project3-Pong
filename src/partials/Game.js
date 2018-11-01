@@ -1,15 +1,41 @@
-import { SVG_NS } from '../settings';
+import { SVG_NS, KEYS } from '../settings';
 import Board from './Board';
+// import KEYS from '../settings'; It's combined with SVG_NS
+import Paddle from './Paddle';
 export default class Game {
   constructor(element, width, height) {
     this.element = element;
     this.width = width;
     this.height = height;
 
-    // Other code goes here...
+    this.paddleWidth = 8;
+    this.paddleHeight = 56;
+    this.boardGap = 10;
+
+    this.player1 = new Paddle(
+      this.height,
+      this.paddleWidth,
+      this.paddleHeight,
+      this.boardGap,
+      (this.height - this.paddleHeight) / 2,
+      KEYS.a,
+      KEYS.z
+    );
+    this.player2 = new Paddle(
+      this.height,
+      this.paddleWidth,
+      this.paddleHeight,
+      this.boardGap + 480,
+      (this.height - this.paddleHeight) / 2,
+      KEYS.a,
+      KEYS.z
+    );
+
+    console.log(this.player1);
+
     this.gameElement = document.getElementById(this.element);
     this.board = new Board(this.width, this.height);
-  }
+  } //end of constructor
 
   render() {
     // More code goes here...
@@ -20,5 +46,7 @@ export default class Game {
     svg.setAttributeNS(null, 'viewBox', `0 0 ${this.width} ${this.height}`);
     this.gameElement.appendChild(svg);
     this.board.render(svg);
+    this.player1.render(svg);
+    this.player2.render(svg);
   }
 }
