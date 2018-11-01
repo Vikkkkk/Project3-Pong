@@ -24,11 +24,13 @@ export default class Paddle {
 
   up() {
     this.y = Math.max(this.y - this.speed, 0);
+    // this.y = Math.max(0,this,y - this.speed);
     console.log(this.y);
   }
 
   down() {
     this.y = Math.min(this.y + this.speed, 256 - this.height);
+    // this.y = Math.min(this.borderHeight = this.height, this.y + this.speed);
     console.log(this.y);
     // Math.max(this.y);
   }
@@ -40,7 +42,7 @@ export default class Paddle {
     rect.setAttributeNS(null, 'y', this.y);
     rect.setAttributeNS(null, 'width', this.width);
     rect.setAttributeNS(null, 'height', this.height);
-    rect.setAttributeNS(null, 'fill', 'white');
+    rect.setAttributeNS(null, 'fill', 'yellow');
 
     svg.appendChild(rect);
   }
