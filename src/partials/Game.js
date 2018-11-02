@@ -3,6 +3,7 @@ import Board from './Board';
 // import KEYS from '../settings'; It's combined with SVG_NS
 import Paddle from './Paddle';
 import Ball from './Ball';
+import Score from './Score';
 export default class Game {
   constructor(element, width, height) {
     this.element = element;
@@ -24,7 +25,8 @@ export default class Game {
       this.boardGap,
       (this.height - this.paddleHeight) / 2,
       KEYS.a,
-      KEYS.z
+      KEYS.z,
+      'player1'
     );
     this.player2 = new Paddle(
       this.height,
@@ -33,19 +35,32 @@ export default class Game {
       this.width - this.boardGap - this.paddleWidth,
       (this.height - this.paddleHeight) / 2,
       KEYS.up,
-      KEYS.down
+      KEYS.down,
+      'player2'
     );
 
     this.ball = new Ball(this.radius, this.width, this.height, 'red');
     this.ball2 = new Ball(this.radius2, this.width, this.height, 'blue');
 
-    console.log(this.player1);
-
     this.gameElement = document.getElementById(this.element);
     this.board = new Board(this.width, this.height);
+
+    this.score1 = new Score(this.width / 2 - 50, 30, 20, 'blue');
+    this.score2 = new Score(this.width / 2 + 50, 30, 20, 'red');
+
+    document.addEventListener('keydown', event => {
+      switch (event.key) {
+        case KEYS.spaceBar:
+          this.pause = !this.pause;
+          break;
+      }
+    });
   } //end of constructor
 
   render() {
+    if (this.pause) {
+      return;
+    }
     // More code goes here...
     this.gameElement.innerHTML = '';
     let svg = document.createElementNS(SVG_NS, 'svg');
@@ -56,7 +71,10 @@ export default class Game {
     this.board.render(svg);
     this.player1.render(svg);
     this.player2.render(svg);
-    this.ball.render(svg);
-    this.ball2.render(svg);
+    this.ball.render(svg, this.player1, this.player2);
+    this.ball2.render(svg, this.player1, this.player2);
+    this.score1.render(svg, this.player1.score);
+    this.score2.render(svg, this.player2.score);
+    return;
   }
 }
