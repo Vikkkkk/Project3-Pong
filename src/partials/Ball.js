@@ -1,4 +1,5 @@
 import { SVG_NS } from '../settings';
+// import { ENGINE_METHOD_PKEY_ASN1_METHS } from 'constants';
 export default class Ball {
   constructor(radius, boardWidth, boardHeight, color) {
     this.radius = radius;
@@ -79,7 +80,70 @@ export default class Ball {
   goal(player) {
     player.score++;
     this.reset();
-    console.log(player.score);
+    switch (player.score) {
+      case 2:
+        this.append(`${player.player}  Got the Golden Paddle!`);
+        break;
+      case 3:
+        this.append(`${player.player}  YEEEA~!`);
+        break;
+      case 4:
+        this.append(`${player.player}  Got the Water Paddle!`);
+        break;
+      case 5:
+        this.append('NOW TRY TWO BALLS!!');
+        break;
+      case 6:
+        this.append(`${player.player}  Got the Pinky Paddle!`);
+        break;
+      case 8:
+        this.append(`${player.player}  Got the "Invisible" Paddle!`);
+        break;
+      case 10:
+        this.append(`${player.player}  Got the LAVA Paddle!`);
+        break;
+    }
+  }
+
+  // pointAcceleration(player) {
+  //   if (player.score >= 3) {
+  //     console.log('acc');
+  //     this.vx += this.ax;
+  //     this.vy += this.ay;
+  //   }
+  // }
+
+  paddleChangeColor(player) {
+    switch (player.score) {
+      case 2:
+        player.color = 'yellow';
+        break;
+      case 4:
+        player.color = 'blue';
+        break;
+      case 6:
+        player.color = 'pink';
+        break;
+      case 8:
+        player.color = 'white';
+        break;
+      case 10:
+        player.color = 'orange';
+        break;
+    }
+  }
+
+  append(message) {
+    let newDiv = document.createElement('div');
+    // and give it some content
+    // const messages = ['Hi there and greetings!', 'cats'];
+    let newContent = document.createTextNode(message);
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
+
+    const $message = document.getElementById('message');
+    $message.innerHTML = '';
+    $message.appendChild(newDiv);
   }
 
   render(svg, player1, player2) {
@@ -92,12 +156,19 @@ export default class Ball {
     } else if (leftGoal) {
       this.goal(player2);
       this.direction = -1;
-      console.log('hi');
     }
+    this.paddleChangeColor(player1);
+    this.paddleChangeColor(player2);
 
-    // this.vx += this.ax;
-    // this.vy += this.ay;
+    // if (rightGoal || leftGoal) {
+    //   this.pointAcceleration(player1);
+    //   this.pointAcceleration(player2);
+    // }
 
+    // if (score >= 3) {
+    //   this.vx += this.ax;
+    //   this.vy += this.ay;
+    // }
     this.x += this.vx;
     this.y += this.vy;
 

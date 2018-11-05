@@ -1,7 +1,7 @@
 import { SVG_NS } from '../settings';
 
-export default class Paddle {
-  constructor(boardHeight, width, height, x, y, up, down, player, color) {
+export default class PaddleLR {
+  constructor(boardHeight, width, height, x, y, up, down, left, right, player) {
     this.boardHeight = boardHeight;
     this.width = width;
     this.height = height;
@@ -11,8 +11,9 @@ export default class Paddle {
     this.score = 0;
     this.keyUp = up;
     this.keyDown = down;
+    this.keyLeft = left;
+    this.keyRight = right;
     this.player = player;
-    this.color = color;
 
     this.keyState = {};
 
@@ -45,6 +46,12 @@ export default class Paddle {
     console.log(this.y);
     // Math.max(this.y);
   }
+  left() {
+    this.x = Math.max(this.x - this.speed, 0);
+  }
+  right() {
+    this.x = Math.min(this.x + this.speed, 512 - this.width);
+  }
 
   coordinates(x, y, width, height) {
     let leftX = x;
@@ -68,13 +75,25 @@ export default class Paddle {
     if (this.keyState[this.keyDown] && this.player === 'player2') {
       this.down();
     }
+    if (this.keyState[this.keyLeft] && this.player === 'player1') {
+      this.left();
+    }
+    if (this.keyState[this.keyRight] && this.player === 'player1') {
+      this.right();
+    }
+    if (this.keyState[this.keyLeft] && this.player === 'player2') {
+      this.left();
+    }
+    if (this.keyState[this.keyRight] && this.player === 'player2') {
+      this.right();
+    }
 
     let rect = document.createElementNS(SVG_NS, 'rect');
     rect.setAttributeNS(null, 'x', this.x);
     rect.setAttributeNS(null, 'y', this.y);
     rect.setAttributeNS(null, 'width', this.width);
     rect.setAttributeNS(null, 'height', this.height);
-    rect.setAttributeNS(null, 'fill', this.color);
+    rect.setAttributeNS(null, 'fill', 'yellow');
 
     svg.appendChild(rect);
   }

@@ -167,6 +167,10 @@ h1 {
   text-align: center;
 }
 
+.game-wrapper div {
+  text-align: center;
+}
+
 /* .board {
   animation: pulse 10s infinite alternate linear;
 }
